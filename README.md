@@ -49,6 +49,7 @@ training_data_scaled = mm.fit_transform(training_data)
 ```
 
 ## Building and Training the Model
+After training the model, we use it to predict stock prices and evaluate its performance using metrics like Root Mean Squared Error (RMSE).
 ```js
 from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout
@@ -77,8 +78,7 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 model.fit(x_train, y_train, epochs=100, batch_size=32)
 ```
 
-Results
-The model is evaluated by comparing the predicted stock prices with the real stock prices. Visualizations are provided to show how well the predictions match the actual stock prices over time.
+
 
 ###  Predictions and Evaluation
 
@@ -108,5 +108,8 @@ rmse = np.sqrt(mse)
 accuracy = 100 - (rmse / np.max(test_data) * 100)
 print(f'Accuracy: {accuracy:.2f}%')
 ```
+
+### Results
+After evaluating the model, the predicted stock prices are compared to the real stock prices, and the accuracy is calculated. A plot of both the real and predicted stock prices is shown to visualize the model’s performance.
 ![Screenshot 2024-11-11 051108](https://github.com/user-attachments/assets/53193d0a-a9b3-423a-bc6b-ebde07641490)
 
