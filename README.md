@@ -4,6 +4,15 @@
 
 This project aims to predict Google's stock prices using historical data and Long Short-Term Memory (LSTM) neural networks. LSTM is a type of recurrent neural network (RNN) that is particularly effective in learning patterns and trends in time-series data, such as stock prices. The model predicts future stock prices based on past performance and can be a helpful tool for stock market analysis.
 
+
+### Required Libraries:
+Pandas: Data manipulation and analysis.
+NumPy: Mathematical operations and array handling.
+Seaborn & Matplotlib: Data visualization.
+scikit-learn: Preprocessing and machine learning utilities.
+imblearn: Used for handling class imbalance (if necessary for classification tasks).
+Keras (TensorFlow): Building and training the LSTM model.
+
 ### Installation 
 
 ```js
