@@ -6,9 +6,9 @@ This project aims to predict Google's stock prices using historical data and Lon
 
 Installation :
 
-'''js
+```js
 pip install pandas numpy matplotlib seaborn scikit-learn imblearn keras tensorflow
-'''
+```
 
 Data Preprocessing
 The dataset consists of historical stock prices, and the following preprocessing steps are applied:
