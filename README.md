@@ -99,5 +99,5 @@ rmse = np.sqrt(mse)
 accuracy = 100 - (rmse / np.max(test_data) * 100)
 print(f'Accuracy: {accuracy:.2f}%')
 ```
-
+![Screenshot 2024-11-11 051108](https://github.com/user-attachments/assets/53193d0a-a9b3-423a-bc6b-ebde07641490)
 
