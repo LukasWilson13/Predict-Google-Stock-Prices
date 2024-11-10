@@ -10,7 +10,7 @@ This project aims to predict Google's stock prices using historical data and Lon
 pip install pandas numpy matplotlib seaborn scikit-learn imblearn keras tensorflow
 ```
 
-Data Preprocessing
+### Data Preprocessing
 Load the dataset, detect and remove outliers, and normalize the stock prices using MinMaxScaler.
 ```js
 import pandas as pd
@@ -39,31 +39,63 @@ mm = MinMaxScaler(feature_range=(0, 1))
 training_data_scaled = mm.fit_transform(training_data)
 ```
 
-Outlier Detection:
+## Building and Training the Model
+```js
+from keras.models import Sequential
+from keras.layers import LSTM, Dense, Dropout
 
-Outliers are identified using boxplots and Z-scores. Data points with Z-scores greater than 3 are considered outliers and removed.
-Scaling:
+# Split the data into training and testing sets
+train_size = int(len(training_data_scaled) * 0.7)
+train_data = training_data_scaled[:train_size]
+test_data = training_data_scaled[train_size:]
 
-The stock prices are scaled between 0 and 1 using MinMaxScaler to help the LSTM model learn more effectively.
-Data Splitting:
+# Prepare training data
+x_train = train_data[:-1]
+y_train = train_data[1:]
 
-The dataset is split into training (70%) and testing (30%) datasets.
-Model Overview
-This project uses Long Short-Term Memory (LSTM), a type of recurrent neural network (RNN) designed to handle time-series data. LSTM is well-suited for stock price prediction because it can capture long-term dependencies in data.
+# Reshape data for LSTM input
+x_train = np.reshape(x_train, (x_train.shape[0], 1, 1))
 
-The model consists of several LSTM layers with Dropout to prevent overfitting.
-The output layer consists of a single neuron to predict the stock price.
-LSTM Model Architecture:
-Input Layer: Accepts the input features (scaled stock prices).
-LSTM Layers: Four LSTM layers to capture time dependencies.
-Dropout Layer: Prevents overfitting by randomly setting a fraction of inputs to 0 during training.
-Dense Layer: Final layer that outputs the predicted stock price.
-Evaluation
-The model’s performance is evaluated using the mean squared error (MSE) and root mean squared error (RMSE), which are standard metrics for regression tasks. Lower values of MSE and RMSE indicate better model performance.
+# Build the LSTM model
+model = Sequential()
+model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
+model.add(Dropout(0.1))
+model.add(LSTM(units=50))
+model.add(Dense(units=1))
 
-Model Accuracy:
-The accuracy is calculated based on how closely the model’s predictions align with the actual stock prices in the test dataset.
+# Compile and fit the model
+model.compile(optimizer='adam', loss='mean_squared_error')
+model.fit(x_train, y_train, epochs=100, batch_size=32)
+```
 
 Results
 The model is evaluated by comparing the predicted stock prices with the real stock prices. Visualizations are provided to show how well the predictions match the actual stock prices over time.
 
+###  Predictions and Evaluation
+
+```js
+# Predicting stock prices
+input_value = test_data
+input_value = mm.transform(input_value)
+input_value = np.reshape(input_value, (input_value.shape[0], 1, 1))
+
+predictions = model.predict(input_value)
+predictions = mm.inverse_transform(predictions)
+
+# Plot real vs predicted stock prices
+plt.figure(figsize=(15, 8))
+plt.plot(test_data, color='red', label='Real Stock Price')
+plt.plot(predictions, color='blue', label='Predicted Stock Price')
+plt.title('Google Stock Price Prediction')
+plt.xlabel('Time')
+plt.ylabel('Stock Price')
+plt.legend()
+plt.show()
+
+# Calculate RMSE and accuracy
+from sklearn.metrics import mean_squared_error
+mse = mean_squared_error(test_data, predictions)
+rmse = np.sqrt(mse)
+accuracy = 100 - (rmse / np.max(test_data) * 100)
+print(f'Accuracy: {accuracy:.2f}%')
+```
