@@ -6,12 +6,12 @@ This project aims to predict Google's stock prices using historical data and Lon
 
 
 ### Required Libraries:
-Pandas: Data manipulation and analysis.
-NumPy: Mathematical operations and array handling.
-Seaborn & Matplotlib: Data visualization.
-scikit-learn: Preprocessing and machine learning utilities.
-imblearn: Used for handling class imbalance (if necessary for classification tasks).
-Keras (TensorFlow): Building and training the LSTM model.
+* Pandas: Data manipulation and analysis.
+* NumPy: Mathematical operations and array handling.
+* Seaborn & Matplotlib: Data visualization.
+* scikit-learn: Preprocessing and machine learning utilities.
+* Keras (TensorFlow): Building and training the LSTM model.
+
 
 ### Installation 
 
