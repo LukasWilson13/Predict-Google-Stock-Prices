@@ -99,3 +99,5 @@ rmse = np.sqrt(mse)
 accuracy = 100 - (rmse / np.max(test_data) * 100)
 print(f'Accuracy: {accuracy:.2f}%')
 ```
+
+
